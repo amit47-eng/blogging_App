@@ -1,18 +1,15 @@
-
+import { MdOutlineHelp } from "react-icons/md";
 
 function Header(){
 
     return(
        
     <header>
-        <h1>Welcome to My Website</h1>
-        <nav>
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
+        <div className="">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMocYUKafPSKtpnKBGv4CZDKFm4P2w8Xr-yw&s" alt="logo" width="50px"/>
+            <input type="search" placeholder="Search..."></input>
+            <a href=""><MdOutlineHelp /></a>
+        </div>
     </header>
 
     )
