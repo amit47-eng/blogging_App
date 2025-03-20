@@ -9,7 +9,7 @@ function Fotter() {
       <a href="#" className="text-white p-2 rounded-full bg-gray-700 hover:bg-gray-600">
         <TiHome />
       </a>
-      <a href="#" className="text-white p-2 rounded-full bg-gray-700 hover:bg-gray-600">
+      <a href="/post" className="text-white p-2 rounded-full bg-gray-700 hover:bg-gray-600">
         <IoMdAdd />
       </a>
       <a href="#" className="text-white p-2 rounded-full bg-gray-700 hover:bg-gray-600">

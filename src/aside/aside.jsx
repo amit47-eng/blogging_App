@@ -1,8 +1,8 @@
-import React from "react";
-import { FaUser } from "react-icons/fa";
+
 import "tailwindcss"
 
 function Aside() {
+
   return (
     <aside className="bg-gray-100 p-4 shadow-md w-64 h-screen sticky top-0">
       <div className="flex items-center mb-4">

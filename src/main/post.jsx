@@ -1,12 +1,67 @@
-import React from "react";
+import { useState } from "react";
+import axios from "axios";
 
-function Post({ title, content }) {
-    return (
-        <article className="mb-8">
-            <h2 className="text-2xl font-bold mb-4">{title}</h2>
-            <p className="text-gray-700 mb-2">{content}</p>
-        </article>
-    );
-}
+const PostForm = ({ userId }) => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [selectedTag, setSelectedTag] = useState("lifestyle");
+  const [image, setImage] = useState(null);
 
-export default Post;
+  const handleFileChange = (e) => {
+    setImage(e.target.files[0]);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (title.length < 10) {
+      alert("Title must be at least 10 characters long.");
+      return;
+    }
+    if (description.length < 10) {
+      alert("Description must be at least 10 characters long.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("article_title", title);
+    formData.append("article_description", description);
+    formData.append("user", userId);
+    formData.append("tags", selectedTag);
+    if (image) {
+      formData.append("article_image", image); // Attach image
+    }
+
+    try {
+      const response = await axios.post("http://127.0.0.1:5001/api/v1/article/createArticle", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      console.log("Post created:", response.data);
+    } catch (error) {
+      console.error("Error creating post:", error.response?.data || error.message);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="text" placeholder="Article Title" value={title} onChange={(e) => setTitle(e.target.value)} required />
+
+      <textarea placeholder="Article Description" value={description} onChange={(e) => setDescription(e.target.value)} required />
+
+      {/* Tag Selection */}
+      <select value={selectedTag} onChange={(e) => setSelectedTag(e.target.value)}>
+        <option value="lifestyle">Lifestyle</option>
+        <option value="tech">Tech</option>
+        <option value="food">Food</option>
+      </select>
+
+      {/* Image Upload */}
+      <input type="file" onChange={handleFileChange} accept="image/*" />
+
+      <button type="submit">Create Post</button>
+    </form>
+  );
+};
+
+export default PostForm;
