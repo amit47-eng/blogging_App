@@ -6,6 +6,7 @@ const PostForm = ({ userId }) => {
   const [description, setDescription] = useState("");
   const [selectedTag, setSelectedTag] = useState("lifestyle");
   const [image, setImage] = useState(null);
+  const [user, setUser] = useState(userId || ""); // State for user ID
 
   const handleFileChange = (e) => {
     setImage(e.target.files[0]);
@@ -22,18 +23,22 @@ const PostForm = ({ userId }) => {
       alert("Description must be at least 10 characters long.");
       return;
     }
+    if (!user) {
+      alert("User ID is required.");
+      return;
+    }
 
     const formData = new FormData();
     formData.append("article_title", title);
     formData.append("article_description", description);
-    formData.append("user", userId);
+    formData.append("user", user);
     formData.append("tags", selectedTag);
     if (image) {
       formData.append("article_image", image); // Attach image
     }
 
     try {
-      const response = await axios.post("http://127.0.0.1:5001/api/v1/article/createArticle", formData, {
+      const response = await axios.post("http://localhost:5001/api/createArticle", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
@@ -45,9 +50,28 @@ const PostForm = ({ userId }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" placeholder="Article Title" value={title} onChange={(e) => setTitle(e.target.value)} required />
+      <input
+        type="text"
+        placeholder="User ID"
+        value={user}
+        onChange={(e) => setUser(e.target.value)}
+        required
+      />
 
-      <textarea placeholder="Article Description" value={description} onChange={(e) => setDescription(e.target.value)} required />
+      <input
+        type="text"
+        placeholder="Article Title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        required
+      />
+
+      <textarea
+        placeholder="Article Description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        required
+      />
 
       {/* Tag Selection */}
       <select value={selectedTag} onChange={(e) => setSelectedTag(e.target.value)}>
