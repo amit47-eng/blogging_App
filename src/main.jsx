@@ -8,6 +8,7 @@ import SignUp from './SignUp.jsx'
 import Profile from './Profile.jsx'
 import Settings from './Settings.jsx'
 import Post from './main/post.jsx'
+import ArticleDetails from './main/article.details.jsx' // Import the new component
 
 createRoot(document.getElementById('root')).render(
     <Router>
@@ -17,6 +18,7 @@ createRoot(document.getElementById('root')).render(
             <Route path="/profile" element={<Profile />} />
             <Route path='/post' element={<Post/>}/>
             <Route path="/settings" element={<Settings />} />
+            <Route path="/articles/:id" element={<ArticleDetails />} /> {/* New route */}
             <Route path="/" element={<App />} />
         </Routes>
     </Router>

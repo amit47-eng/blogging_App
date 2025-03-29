@@ -1,12 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const PostForm = ({ userId }) => {
+const PostForm = ({ userId, refreshArticles }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [selectedTag, setSelectedTag] = useState("lifestyle");
   const [image, setImage] = useState(null);
   const [user, setUser] = useState(userId || ""); // State for user ID
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleFileChange = (e) => {
     setImage(e.target.files[0]);
@@ -43,6 +45,8 @@ const PostForm = ({ userId }) => {
       });
 
       console.log("Post created:", response.data);
+      if (refreshArticles) refreshArticles(); // Trigger refresh
+      navigate(`/articles/${response.data._id}`); // Navigate to the created post
     } catch (error) {
       console.error("Error creating post:", error.response?.data || error.message);
     }
